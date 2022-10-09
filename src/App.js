@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { Header } from "./Header";
 
 function App() {
+  // 掲示板スレッド
+  const [threads, setThreads] = useState([]);
+
+  // 掲示板スレッドの取得
+  useEffect(() => {
+    fetch("https://railway-react-bulletin-board.herokuapp.com/threads", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => setThreads(data));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Thread Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {threads.map((data, index) => {
+              return (
+                <tr key={index} className="hover">
+                  <th> {data.id}</th>
+                  <td>{data.title}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 
