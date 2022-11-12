@@ -1,14 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { createRoot } from 'react-dom/client'
-import {
-  Outlet,
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Link,
-  BrowserRouter
-} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
 
 import ErrorPage from './error-page'
