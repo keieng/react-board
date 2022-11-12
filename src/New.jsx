@@ -41,7 +41,7 @@ function New() {
             <input
               type="text"
               placeholder="スレッドタイトル"
-              className="input w-full max-w-xs"
+              className="input w-full"
               value={threadName}
               onChange={(e) => {
                 setThreadName(e.target.value)

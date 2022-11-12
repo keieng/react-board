@@ -4,9 +4,10 @@ import './App.css'
 
 import ErrorPage from './error-page'
 
-import Thread from './Thread'
+import Threads from './Threads'
 import New from './New'
 import Root from './routes/root'
+import Thread from './Thread'
 
 const router = createBrowserRouter([
   {
@@ -16,11 +17,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Thread />
+        element: <Threads />
       },
       {
         path: '/thread/new',
         element: <New />
+      },
+      {
+        path: '/thread/:threadId',
+        element: <Thread />
       }
     ]
   }
