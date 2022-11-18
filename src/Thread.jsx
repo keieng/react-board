@@ -1,58 +1,58 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function Thread() {
   // スレッドデータ
   const [thread, setThread] = useState({
-    title: '',
-    posts: []
-  })
+    title: "",
+    posts: [],
+  });
   // 投稿メッセージのテキスト
-  const [postText, setPostText] = useState('')
+  const [postText, setPostText] = useState("");
   // URLパラメータを取得
-  const { threadId } = useParams()
+  const { threadId } = useParams();
   // API
-  const apiUrl = `https://railway-react-bulletin-board.herokuapp.com/threads/${threadId}/posts`
+  const apiUrl = `https://railway-react-bulletin-board.herokuapp.com/threads/${threadId}/posts`;
   // スレッドデータを取得する関数
-  const getPostsData = () =>
+  const getPosts = () =>
     fetch(apiUrl, {
-      method: 'GET'
+      method: "GET",
     })
       .then((response) => response.json())
       .then((data) => {
-        setThread(data)
-      })
+        setThread(data);
+      });
 
   // スレッドデータの取得
   useEffect(() => {
-    getPostsData()
-  }, [])
+    getPosts();
+  }, []);
 
   // メッセージの投稿処理
-  const postCreatePost = () => {
-    if (!postText) return
+  const createPost = () => {
+    if (!postText) return;
     const data = {
-      post: postText
-    }
+      post: postText,
+    };
     fetch(apiUrl, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (!response.ok) {
-          console.error('サーバーエラー')
+          console.error("サーバーエラー");
         } else {
-          setPostText('')
-          getPostsData()
+          setPostText("");
+          getPosts();
         }
       })
       .catch((error) => {
-        console.error('通信に失敗しました', error)
-      })
-  }
+        console.error("通信に失敗しました", error);
+      });
+  };
 
   return (
     <>
@@ -67,10 +67,10 @@ function Thread() {
                 className="input w-full"
                 value={postText}
                 onChange={(e) => {
-                  setPostText(e.target.value)
+                  setPostText(e.target.value);
                 }}
               />
-              <button onClick={postCreatePost} className="btn btn-primary">
+              <button onClick={createPost} className="btn btn-primary">
                 投稿
               </button>
             </div>
@@ -88,7 +88,7 @@ function Thread() {
                       <th> {data.id}</th>
                       <td>{data.post}</td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -96,7 +96,7 @@ function Thread() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Thread
+export default Thread;

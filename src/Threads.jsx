@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Threads() {
   // 掲示板スレッド
-  const [threads, setThreads] = useState([])
+  const [threads, setThreads] = useState([]);
 
   // 掲示板スレッドの取得
   useEffect(() => {
     fetch(
-      'https://railway-react-bulletin-board.herokuapp.com/threads?offset=5475',
+      "https://railway-react-bulletin-board.herokuapp.com/threads?offset=5500",
       {
-        method: 'GET'
+        method: "GET",
       }
     )
       .then((response) => response.json())
-      .then((data) => setThreads(data))
-  }, [])
+      .then((data) => setThreads(data));
+  }, []);
 
   return (
     <>
@@ -44,7 +44,7 @@ function Threads() {
                         </Link>
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -52,7 +52,7 @@ function Threads() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Threads
+export default Threads;
