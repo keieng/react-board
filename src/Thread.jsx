@@ -14,44 +14,83 @@ function Thread() {
   // API
   const apiUrl = `https://railway-react-bulletin-board.herokuapp.com/threads/${threadId}/posts`;
   // スレッドデータを取得する関数
-  const getPosts = () =>
-    fetch(apiUrl, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setThread(data);
+  // const getPosts = () =>
+  //   fetch(apiUrl, {
+  //     method: "GET",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setThread(data);
+  //     });
+
+  // スレッドデータを取得する関数
+  const getPostsAsync = async () => {
+    try {
+      const response = await fetch(apiUrl, {
+        method: "GET",
       });
+      if (!response.ok)
+        throw `サーバーエラー　${response.status}：${response.statusText}`;
+      const data = await response.json();
+      setThread(data);
+    } catch (error) {
+      alert("error： " + error);
+    }
+  };
 
   // スレッドデータの取得
   useEffect(() => {
-    getPosts();
+    getPostsAsync();
   }, []);
 
   // メッセージの投稿処理
-  const createPost = () => {
+  // const createPost = () => {
+  //   if (!postText) return;
+  //   const data = {
+  //     post: postText,
+  //   };
+  //   fetch(apiUrl, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         console.error("サーバーエラー");
+  //       } else {
+  //         setPostText("");
+  //         // getPosts();
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("通信に失敗しました", error);
+  //     });
+  // };
+
+  // メッセージの投稿処理
+  const createPostAsync = async () => {
     if (!postText) return;
     const data = {
       post: postText,
     };
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.error("サーバーエラー");
-        } else {
-          setPostText("");
-          getPosts();
-        }
-      })
-      .catch((error) => {
-        console.error("通信に失敗しました", error);
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
+
+      if (!response.ok)
+        throw `サーバーエラー　${response.status}：${response.statusText}`;
+      setPostText("");
+      getPostsAsync();
+    } catch (error) {
+      alert("error： " + error);
+    }
   };
 
   return (
@@ -70,7 +109,7 @@ function Thread() {
                   setPostText(e.target.value);
                 }}
               />
-              <button onClick={createPost} className="btn btn-primary">
+              <button onClick={createPostAsync} className="btn btn-primary">
                 投稿
               </button>
             </div>
