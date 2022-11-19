@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Record from "./components/Record";
 
 function Thread() {
   // スレッドデータ
@@ -114,19 +115,15 @@ function Thread() {
               </button>
             </div>
             <table className="table w-full">
-              {/* <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Post</th>
-                </tr>
-              </thead> */}
               <tbody>
                 {thread.posts.map((data, index) => {
                   return (
-                    <tr key={index} className="hover">
-                      <th> {data.id}</th>
-                      <td>{data.post}</td>
-                    </tr>
+                    <Record
+                      key={index}
+                      id={data.id}
+                      detail={data.post}
+                      link={false}
+                    />
                   );
                 })}
               </tbody>

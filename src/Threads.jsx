@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Record from "./components/Record";
 
 function Threads() {
   // 掲示板スレッド
@@ -28,22 +29,19 @@ function Threads() {
                 <tr>
                   <th>ID</th>
                   <th>Thread Name</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 {threads.map((data, index) => {
                   return (
-                    <tr key={index} className="hover">
-                      <th> {data.id}</th>
+                    <Record key={index} id={data.id} detail={data.title}>
                       <td>
-                        <Link
-                          LinkclassName="btn underline"
-                          to={`thread/${data.id}`}
-                        >
-                          {data.title}
+                        <Link className="btn" to={`thread/${data.id}`}>
+                          閲覧
                         </Link>
                       </td>
-                    </tr>
+                    </Record>
                   );
                 })}
               </tbody>

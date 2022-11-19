@@ -1,36 +1,36 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function New() {
   // 追加するスレッドの名前
-  const [threadName, setThreadName] = useState('')
+  const [threadName, setThreadName] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // スレッドを新規作成
   const postCreateThread = () => {
-    if (!threadName) return
+    if (!threadName) return;
     const data = {
-      title: threadName
-    }
-    fetch('https://railway-react-bulletin-board.herokuapp.com/threads', {
-      method: 'POST',
+      title: threadName,
+    };
+    fetch("https://railway-react-bulletin-board.herokuapp.com/threads", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (!response.ok) {
-          console.error('サーバーエラー')
+          console.error("サーバーエラー");
         } else {
-          navigate('/')
+          navigate("/");
         }
       })
       .catch((error) => {
-        console.error('通信に失敗しました', error)
-      })
-  }
+        console.error("通信に失敗しました", error);
+      });
+  };
 
   return (
     <>
@@ -44,7 +44,7 @@ function New() {
               className="input w-full"
               value={threadName}
               onChange={(e) => {
-                setThreadName(e.target.value)
+                setThreadName(e.target.value);
               }}
             />
             <div className="card-actions flex justify-between">
@@ -59,7 +59,7 @@ function New() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default New
+export default New;
